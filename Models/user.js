@@ -17,6 +17,12 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    keys: {
+        type: Schema.Types.ObjectId,
+        ref: "key",
+    },
+}, {
+    timestamps: true,
 });
 
 userSchema.methods.generateAuthToken = function() {
@@ -32,6 +38,7 @@ const loginValidate = (user) => {
         password: Joi.string()
             .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
             .required(),
+        keys: Joi.string(),
     });
 
     return schema.validate(user);
